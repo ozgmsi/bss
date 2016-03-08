@@ -28,7 +28,7 @@ using std::vector;
 #include "NextFit.h"	// de NextFit allocator (lazy version)
 #include "NextFit2.h"	// de NextFit2 allocator (eager version)
 #include "BestFit.h"		// pas de naam aan aan jouw versie
-#include "BestFit2.h"		// pas de naam aan aan jouw versie
+//#include "BestFit2.h"		// pas de naam aan aan jouw versie
 // TODO:
 // .... voeg hier je eigen variant(en) toe ....
 // bijvoorbeeld:
@@ -170,12 +170,13 @@ void	doOptions(int argc, char *argv[])
 				beheerders.push_back( new NextFit2 );
 				break;
 			case 'b': // -b = BestFit allocator gevraagd
-				beheerders.push_back( new BestFit );
+				beheerders.push_back( new BestFit(cflag) );
 				break;
+            /*
 			case 'B': // -B = BestFit2 allocator gevraagd
 				beheerders.push_back( new BestFit2 );
 				break;
-            /*
+
 			case 'w': // -w = WorstFit allocator gevraagd
 				beheerders.push_back( new WorstFit );
 				break;
@@ -250,10 +251,11 @@ int  main(int argc, char *argv[])
 			} else {
 				cout << AC_BLUE "Measuring " << beheerder->getType()
 					 << " doing " << aantal << " calls on " << size << " units\n" AA_RESET;
-				mp->randomscenario(aantal, vflag);
+//				mp->randomscenario(aantal, vflag);
 				// TODO:
 				// .. vervang straks 'randomscenario' door iets toepasselijkers
 				// zodat je ook voorspelbare scenarios kan afhandelen.
+				mp->customScenario(aantal, cflag);
 			}
 
 			// Nu alles weer netjes opruimen

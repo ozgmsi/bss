@@ -310,6 +310,81 @@ void	Application::randomscenario(int aantal, bool vflag)
 }
 
 
+void Application::customScenario(int aantal, bool vflag)
+{
+    bool old_vflag = this->vflag;
+    this->vflag = vflag;
+
+    oom_teller = 0;
+    err_teller = 0;
+
+    srand(1);
+
+    Stopwatch klok;
+    klok.start();
+
+    startBrowser();
+
+    for (int i = 0; i < aantal; ++i){
+        int r = rand();
+        if (objecten.empty() || vraagkans(r)){
+            r = rand();
+            r %= (size / 100);
+            vraagObjecten(r + 1);
+        } else if (!objecten.empty()){
+            geefObjectenVrij();
+        }
+    }
+
+    klok.stop();
+    klok.report();
+    beheerder->report();
+
+    if ((oom_teller > 0) || (err_teller > 0) ) {  // some errors
+        cout << AC_RED "De allocater faalde " << oom_teller << " keer";
+        cout << " en maakte " << err_teller << " fouten\n" AA_RESET;
+    } else {                                        // no problems
+        cout << AC_GREEN "De allocater faalde " << oom_teller << " keer";
+        cout << " en maakte " << err_teller << " fouten\n" AA_RESET;
+    }
+
+    this->vflag = old_vflag; // turn on verbose output again
+}
+
+void Application::startBrowser()
+{
+    vraagGeheugen(size * 0.5);
+    for (int i = 0; i < 9; ++i){
+        switch (i % 2){
+        case 0:
+            tabWithWebsite();
+            break;
+        default:
+            tabWithVideo();
+        }
+    }
+}
+
+void Application::tabWithVideo()
+{
+    vraagGeheugen(size * 0.4);
+}
+
+void Application::tabWithWebsite()
+{
+    vraagGeheugen(size * 0.3);
+}
+
+void Application::vraagObjecten(int omvang)
+{
+
+}
+
+void Application::geefObjectenVrij()
+{
+
+}
+
 // TODO:
 // Schrijf je eigen scenario routine die zich meer gedraagt als een
 // echte applicatie. En vergeet niet Application.h ook aan te passen.

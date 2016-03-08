@@ -62,22 +62,20 @@ Area *BestFit::searcher(int wanted)
     require(!areas.empty());
 
     int lowestBestFitSize = getSize();
-    int bestFitPosition = -1;
-//    ALiterator bestFitPosition = 0;
+    ALiterator bestFitPosition = areas.end();
     Area *bestFitArea = 0;
 
     for (ALiterator i = areas.begin(); i != areas.end(); ++i){
         Area *ap = *i;
         if (wanted <= ap->getSize() && (ap->getSize() - wanted) < lowestBestFitSize){
             lowestBestFitSize = ap->getSize() - wanted;
-            //bestFitPosition = i; // HOE EEN ITERATOR DIE VERWIJST NAAR EEN POSITIE OPSLAAN, DIT MOET LATER WEER GEBRUIKT WORDEN OM HET ELEMENT TE VERWIJDEREN.
-            bestFitPosition = std::distance(areas.begin(), i);
+            bestFitPosition = i;
             bestFitArea = *i;
         }
     }
 
-    if (bestFitPosition != 0){
-        ALiterator next = areas.erase(bestFitPosition); // COMILEERT NIET OMDAT DE ITERATOR ONBEKENT IS.
+    if (bestFitPosition != areas.end()){
+        ALiterator next = areas.erase(bestFitPosition);
         if (bestFitArea->getSize() > wanted){
             Area *remaining = bestFitArea->split(wanted);
             areas.insert(next, remaining);

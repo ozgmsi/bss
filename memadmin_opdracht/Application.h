@@ -54,6 +54,7 @@ public:
 	/// @param	vflag	true=vertel wat er allemaal gebeurt (kost wel performance)
 	void randomscenario(int aantal, bool vflag);
 
+	void customScenario(int aantal, bool vflag);
 	// TODO:
 	// voeg hier straks je eigen scenario(s) toe
 	// (en in Application.cc)
@@ -62,8 +63,15 @@ private:
 
 	// interne hulpjes
 	void	vraagGeheugen(int omvang);
+	void    vraagObjecten(int omvang);
+	void    geefObjectenVrij();
 	void	vergeetOudste();
 	void	vergeetRandom();
+
+	void    startBrowser();
+	void    tabWithVideo();
+	void    tabWithWebsite();
+
 
 	// for statistics
 	int		err_teller; // Errors teller
