@@ -327,12 +327,12 @@ void Application::customScenario(int aantal, bool vflag)
 
     for (int i = 0; i < aantal; ++i){
         int r = rand();
-        if (objecten.empty() || vraagkans(r)){
+        if (customObjecten.empty() || vraagkans(r)){
             r = rand();
             r %= (size / 100);
-            vraagObjecten(r + 1);
-        } else if (!objecten.empty()){
-            geefObjectenVrij();
+            vraagCustomObjecten(r + 1);
+        } else if (!customObjecten.empty()){
+            geefCustomObjectenVrij();
         }
     }
 
@@ -375,14 +375,78 @@ void Application::tabWithWebsite()
     vraagGeheugen(size * 0.3);
 }
 
-void Application::vraagObjecten(int omvang)
+void Application::vraagCustomObjecten(int omvang)
 {
+    if (vflag){
+		cout << "Vraag " << omvang << ", " << flush;
+    }
 
+	// Deze interne controle overslaan als we aan het testen zijn.
+	if (!tflag){
+		require((0 < omvang) && (omvang <= size));	// is de 'omvang' wel geldig ?
+	}
+	// Vraag de beheerder om geheugen
+	Area  *ap = beheerder->alloc(omvang);
+
+	// Allocator reported out of memory?
+	if (ap == 0) {
+		if (vflag)
+			cout << AC_RED "out of memory" AA_RESET << endl;
+		++oom_teller;	// out-of-memory teller bijwerken
+		return;
+	}
+
+	if (vflag){	// vertel welk gebied we kregen
+		cout << "kreeg " << (*ap) << endl;
+	}
+
+	// Nu moeten we eerst controlen of er geen overlap
+	// bestaat met gebieden die we al eerder hadden gekregen ...
+	for (Area* xp : objecten)
+	{
+		if (ap->overlaps(xp)) {     // Oeps!
+			// Dit zou eigenlijk een "fatal error" moeten zijn,
+			// maar bij de RandomFit zal dit wel vaker gebeuren
+			// dus alleen maar melden dat het fout is ...
+			if (vflag) {
+				cout << AC_RED "Oeps, het nieuwe gebied overlapt met " << (*xp) << AA_RESET << endl;
+			}
+			++err_teller;	// fouten teller bijwerken
+			break;			// verder zoeken is niet meer zo zinvol ...
+							// ... en levert alleen maar meer uitvoer op.
+		}
+	}
+
+	// Het gekregen gebied moeten we natuurlijk wel onthouden.
+	customObjecten.push_back(ap);
 }
 
-void Application::geefObjectenVrij()
+void Application::geefCustomObjectenVrij()
 {
+    require(!customObjecten.empty());	// hebben we eigenlijk wel wat ?
 
+	Area  *ap = customObjecten.front();	// het oudste gebied alvast opzoeken
+
+	int  n = customObjecten.size();		// valt er wat te kiezen?
+	if (n > 1) {
+		int  m = randint(0, n);		// kies een index
+		// en zoek dat element op
+		ALiterator  i;
+		for (i = customObjecten.begin() ; (m > 0) && (i != customObjecten.end()) ; ++i, --m) {
+			;
+		}
+		ap = *i;					// het slachtoffer
+		customObjecten.erase(i);			// uit de lijst halen
+	} else {
+		customObjecten.pop_front();		// het oudste gebied uit de lijst halen
+	}
+
+	if (vflag) {
+		// vertel wat we gaan doen
+		//cout << "Vrijgeven " << (*ap) << endl;
+	}
+
+	beheerder->free(ap);
 }
 
 // TODO:

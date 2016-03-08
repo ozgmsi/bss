@@ -21,7 +21,9 @@ void BestFit::setSize(int new_size)
 Area *BestFit::alloc(int wanted)
 {
     require(wanted > 0);
-    require(wanted <= areas.size());
+    require(wanted <= size);
+
+    updateStats();
 
     if (areas.empty()){
         return 0;
@@ -58,7 +60,7 @@ void BestFit::free(Area *ap)
 Area *BestFit::searcher(int wanted)
 {
     require(wanted > 0);
-    require(wanted <= areas.size());
+    require(wanted <= size);
     require(!areas.empty());
 
     int lowestBestFitSize = getSize();

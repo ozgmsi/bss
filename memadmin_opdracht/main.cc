@@ -84,7 +84,7 @@ void	tellOptions(const char *progname)
 	// TODO:
 	// Fitter groep
 	cout << "\t-b\t\tuse the best fit allocator (lazy)\n";
-	cout << "\t-B\t\tuse the best fit allocator (eager)\n";
+	//cout << "\t-B\t\tuse the best fit allocator (eager)\n";
 	//cout << "\t-w\t\tuse the worst fit allocator (lazy)\n";
 	//cout << "\t-W\t\tuse the worst fit allocator (eager)\n";
 	// TODO:
@@ -101,7 +101,7 @@ void	tellOptions(const char *progname)
 void	doOptions(int argc, char *argv[])
 {
 	// TODO:
-	char  options[] = "s:a:tvcrfFnN"; // De opties die we willen herkennen
+	char  options[] = "s:a:tvcrfFnNb"; // De opties die we willen herkennen
 	// Als je algoritmes toevoegt dan moet je de string hierboven uitbreiden.
 	// (Vergeet niet om de tellOptions functie hiervoor ook aan te passen)
 	// Als je alle algoritmes zou realiseren dan wordt
@@ -170,7 +170,7 @@ void	doOptions(int argc, char *argv[])
 				beheerders.push_back( new NextFit2 );
 				break;
 			case 'b': // -b = BestFit allocator gevraagd
-				beheerders.push_back( new BestFit(cflag) );
+				beheerders.push_back( new BestFit );
 				break;
             /*
 			case 'B': // -B = BestFit2 allocator gevraagd

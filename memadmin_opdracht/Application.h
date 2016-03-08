@@ -30,6 +30,7 @@ private:
 	int			 size;		// de omvang van het beheerde geheugen
 
 	AreaList	 objecten;	// de lijst van de gekregen gebieden
+	AreaList     customObjecten;
 
 	bool		 vflag;		// "verbose" mode;
 							// true als we willen zien wat er gebeurt
@@ -63,8 +64,8 @@ private:
 
 	// interne hulpjes
 	void	vraagGeheugen(int omvang);
-	void    vraagObjecten(int omvang);
-	void    geefObjectenVrij();
+	void    vraagCustomObjecten(int omvang);
+	void    geefCustomObjectenVrij();
 	void	vergeetOudste();
 	void	vergeetRandom();
 
