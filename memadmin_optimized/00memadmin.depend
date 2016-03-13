@@ -1,0 +1,144 @@
+# depslib dependency file v1.0
+1454969638 source:c:\users\ozgur\desktop\bss\opdrachten\memadmin\allocator.cc
+	"main.h"
+	"Allocator.h"
+
+1454969638 c:\users\ozgur\desktop\bss\opdrachten\memadmin\main.h
+	<iostream>
+	"common.h"
+	"ansi.h"
+	"asserts.h"
+	"Area.h"
+	"Allocator.h"
+
+1454969639 c:\users\ozgur\desktop\bss\opdrachten\memadmin\common.h
+
+1454969638 c:\users\ozgur\desktop\bss\opdrachten\memadmin\ansi.h
+	"common.h"
+
+1454969638 c:\users\ozgur\desktop\bss\opdrachten\memadmin\asserts.h
+	"where.h"
+	"assert_error.h"
+
+1454969638 c:\users\ozgur\desktop\bss\opdrachten\memadmin\where.h
+
+1454969638 c:\users\ozgur\desktop\bss\opdrachten\memadmin\assert_error.h
+	<stdexcept>
+
+1454969639 c:\users\ozgur\desktop\bss\opdrachten\memadmin\area.h
+	<iostream>
+	"asserts.h"
+
+1454969638 c:\users\ozgur\desktop\bss\opdrachten\memadmin\allocator.h
+	"Area.h"
+
+1454969639 source:c:\users\ozgur\desktop\bss\opdrachten\memadmin\application.cc
+	<cstdlib>
+	"main.h"
+	"Stopwatch.h"
+	"Application.h"
+
+1454969639 c:\users\ozgur\desktop\bss\opdrachten\memadmin\stopwatch.h
+	<sys/resource.h>
+	<sys/times.h>
+	<times.h>
+	<time.h>
+	<sys/time.h>
+	<windows.h>
+
+1454969638 c:\users\ozgur\desktop\bss\opdrachten\memadmin\application.h
+	<list>
+	"Allocator.h"
+	"Area.h"
+
+1454969638 source:c:\users\ozgur\desktop\bss\opdrachten\memadmin\area.cc
+	"asserts.h"
+	"Area.h"
+
+1454969638 source:c:\users\ozgur\desktop\bss\opdrachten\memadmin\assert_error.cc
+	<string>
+	<sstream>
+	"assert_error.h"
+
+1457898879 source:c:\users\ozgur\desktop\bss\opdrachten\memadmin\firstfit.cc
+	"FirstFit.h"
+	"ansi.h"
+
+1454969639 c:\users\ozgur\desktop\bss\opdrachten\memadmin\firstfit.h
+	"Fitter.h"
+
+1454969638 c:\users\ozgur\desktop\bss\opdrachten\memadmin\fitter.h
+	<list>
+	"Allocator.h"
+
+1454969639 source:c:\users\ozgur\desktop\bss\opdrachten\memadmin\firstfit2.cc
+	"FirstFit2.h"
+
+1454969638 c:\users\ozgur\desktop\bss\opdrachten\memadmin\firstfit2.h
+	"FirstFit.h"
+
+1454969638 source:c:\users\ozgur\desktop\bss\opdrachten\memadmin\fitter.cc
+	<cmath>
+	"ansi.h"
+	"Fitter.h"
+
+1457906146 source:c:\users\ozgur\desktop\bss\opdrachten\memadmin\main.cc
+	<vector>
+	<cstdlib>
+	<getopt.h>
+	"main.h"
+	"RandomFit.h"
+	"FirstFit.h"
+	"FirstFit2.h"
+	"NextFit.h"
+	"NextFit2.h"
+	"BestFit.h"
+	"Application.h"
+
+1454969638 c:\users\ozgur\desktop\bss\opdrachten\memadmin\randomfit.h
+	"Allocator.h"
+
+1454969638 c:\users\ozgur\desktop\bss\opdrachten\memadmin\nextfit.h
+	"Fitter.h"
+
+1454969639 c:\users\ozgur\desktop\bss\opdrachten\memadmin\nextfit2.h
+	"NextFit.h"
+
+1454969639 source:c:\users\ozgur\desktop\bss\opdrachten\memadmin\nextfit.cc
+	"main.h"
+	"NextFit.h"
+	"ansi.h"
+
+1454969639 source:c:\users\ozgur\desktop\bss\opdrachten\memadmin\nextfit2.cc
+	"NextFit2.h"
+
+1454969638 source:c:\users\ozgur\desktop\bss\opdrachten\memadmin\randomfit.cc
+	"main.h"
+	"RandomFit.h"
+	<cstdlib>
+
+1454969638 source:c:\users\ozgur\desktop\bss\opdrachten\memadmin\stopwatch.cc
+	<iostream>
+	<cstdio>
+	"asserts.h"
+	"Stopwatch.h"
+	<unistd.h>
+	<time.h>
+
+1454969639 source:c:\users\ozgur\desktop\bss\opdrachten\memadmin\unix_error.cc
+	<cstring>
+	<cerrno>
+	<sstream>
+	"unix_error.h"
+
+1454969639 c:\users\ozgur\desktop\bss\opdrachten\memadmin\unix_error.h
+	<stdexcept>
+	<string>
+	"where.h"
+
+1457906431 source:c:\users\ozgur\desktop\bss\opdrachten\memadmin\bestfit.cpp
+	"BestFit.h"
+
+1457904989 c:\users\ozgur\desktop\bss\opdrachten\memadmin\bestfit.h
+	"Fitter.h"
+
