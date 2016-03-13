@@ -44,16 +44,17 @@ Area* BestFit::searcher(int wanted)
         if (mem->getSize() < bestfit->getSize() && wanted < mem->getSize())
         {
             /// Found memory
-            bestfit = mem->split(wanted);
+            bestfit = mem;
         }
     }
 
+    /// Found best fitting area
     if (bestfit)
     {
+        /// TODO
+        bestfit->split(wanted);
         return bestfit;
     }
-
-    /// TODO
 
     return 0;
 }
