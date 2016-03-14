@@ -207,14 +207,10 @@ void	doOptions(int argc, char *argv[])
 /// Programma executie begint hier ...
 int  main(int argc, char *argv[])
 {
-
     BestFit f(true);
     f.setSize(10240);
     Area *ap = f.alloc(1000);
-
-    cout << f.getSize() << endl;
-
-    cout << ap->getSize() << endl;
+    Area *ap2 = f.alloc(1000);
 
 	return EXIT_SUCCESS;
 }

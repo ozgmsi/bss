@@ -15,6 +15,9 @@ Area* BestFit::alloc(int wanted)
 
     if (memblockp){
         /// Geheugen verkregen
+
+        std::cout << wanted << "kb verkregen, over : " << memblockp->getSize() << std::endl;
+        areas.push_back(memblockp);
         return memblockp;
     }
 
@@ -22,39 +25,41 @@ Area* BestFit::alloc(int wanted)
 
 
         /// Anders geeft 0 terug
+    return 0;
 }
 
 /// Internal
 Area* BestFit::searcher(int wanted)
 {
-
     /// Pre-requirements
     require(wanted > 0);
+    std::cout << wanted << "Wanted" << std::endl;
+    std::cout << size << "Size" << std::endl;
     require(wanted <= size);
     require(!areas.empty());
 
     /// Get reference to the front element
     Area* bestfit = areas.front();
-
-    for(ALiterator iter2 = areas.begin(); iter != areas.end(); ++iter)
+    std::cout << areas.size() << std::endl;
+    for(ALiterator mem_iter = areas.begin(); mem_iter != areas.end(); ++mem_iter)
     {
-        Area* mem = *iter;
+        Area* mem = *mem_iter;
 
         ///Search for the best fitting block
-        if (mem->getSize() < bestfit->getSize() && wanted < mem->getSize())
+        if (mem->getSize() <= bestfit->getSize() && wanted < mem->getSize())
         {
-            /// Found memory
+        /// Found memory
             bestfit = mem;
         }
     }
 
-    /// Found best fitting area
-    if (bestfit)
-    {
-        /// TODO
-        bestfit->split(wanted);
+    if (bestfit){
+        bestfit = bestfit->split(wanted);
+        size -= wanted;
         return bestfit;
     }
+
+    // Framentatie implementeren
 
     return 0;
 }

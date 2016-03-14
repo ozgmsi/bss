@@ -225,7 +225,7 @@
 	"ansi.h"
 	"Fitter.h"
 
-1457906146 source:c:\users\ozgur\desktop\bss\opdrachten\repo\bss\memadmin_optimized\main.cc
+1457954080 source:c:\users\ozgur\desktop\bss\opdrachten\repo\bss\memadmin_optimized\main.cc
 	<vector>
 	<cstdlib>
 	<getopt.h>
@@ -281,4 +281,7 @@
 	<stdexcept>
 	<string>
 	"where.h"
+
+1457953845 source:c:\users\ozgur\desktop\bss\opdrachten\repo\bss\memadmin_optimized\bestfit.cpp
+	"BestFit.h"
 

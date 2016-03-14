@@ -33,6 +33,8 @@ bool	Area::overlaps(const Area *xp) const
 Area	*Area::split(int gevraagd)
 {
 	require(gevraagd > 0);		// sanity check
+	std::cout << gevraagd << "THIS" << std::endl;
+	std::cout << size << "THISSIZE" << std::endl;
 	require(gevraagd < size);	// er moet wel iets overblijven
 
 	Area  *rp = new Area(base + gevraagd, size - gevraagd);
