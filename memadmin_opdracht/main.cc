@@ -255,7 +255,7 @@ int  main(int argc, char *argv[])
 				// TODO:
 				// .. vervang straks 'randomscenario' door iets toepasselijkers
 				// zodat je ook voorspelbare scenarios kan afhandelen.
-				mp->customScenario(aantal, cflag);
+				mp->customScenario(aantal, vflag);
 			}
 
 			// Nu alles weer netjes opruimen
