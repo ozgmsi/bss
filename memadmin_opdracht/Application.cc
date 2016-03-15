@@ -402,7 +402,7 @@ void Application::vraagCustomObjecten(int omvang)
 
 	// Nu moeten we eerst controlen of er geen overlap
 	// bestaat met gebieden die we al eerder hadden gekregen ...
-	for (Area* xp : objecten)
+	for (Area* xp : customObjecten)
 	{
 		if (ap->overlaps(xp)) {     // Oeps!
 			// Dit zou eigenlijk een "fatal error" moeten zijn,
