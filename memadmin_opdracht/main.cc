@@ -101,6 +101,8 @@ void	tellOptions(const char *progname)
 void	doOptions(int argc, char *argv[])
 {
 	// TODO:
+	/// -tc -fb voor firstfit & bestfit
+
 	char  options[] = "s:a:tvcrfFnNb"; // De opties die we willen herkennen
 	// Als je algoritmes toevoegt dan moet je de string hierboven uitbreiden.
 	// (Vergeet niet om de tellOptions functie hiervoor ook aan te passen)

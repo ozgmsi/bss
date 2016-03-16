@@ -3,6 +3,7 @@
 
 BestFit::~BestFit()
 {
+    /// Geheugen block opschonen
     while(!areas.empty())
     {
         Area *area = areas.back();
@@ -20,28 +21,35 @@ void BestFit::setSize(int new_size)
 
 Area *BestFit::alloc(int wanted)
 {
+    /// Pre requirements
     require(wanted > 0);
     require(wanted <= size);
 
-    updateStats();
+    updateStats();              // update statistics
 
+    /// Indien leeg
     if (areas.empty()){
+        /// Geen geheugen verkrijgbaar
         return 0;
     }
 
     Area *ap = 0;
+
+    /// Zoek intern naar geheugen
     ap = searcher(wanted);
     if (ap){
         return ap;
     }
+
+    /// Check voor fragmentatie in het geheugen
     if (reclaim()){
+        /// Probeer nog een keer
         ap = searcher(wanted);
         if (ap){
             return ap;
         }
     }
-
-    //dump(); //DEBUG
+    /// Geheugen vol
     return 0;
 }
 
@@ -53,12 +61,13 @@ void BestFit::free(Area *ap)
             check(!ap->overlaps(*i));
         }
     }
-
+    /// Lazy methode, voeg toe aan het eind
     areas.push_back(ap);
 }
 
 Area *BestFit::searcher(int wanted)
 {
+    /// Pre requirements
     require(wanted > 0);
     require(wanted <= size);
     require(!areas.empty());
@@ -67,6 +76,7 @@ Area *BestFit::searcher(int wanted)
     ALiterator bestFitPosition = areas.end();
     Area *bestFitArea = 0;
 
+    /// Zoekt de best passende area in de memoryblock(het minimale wat aansluit op het aantal gevraagde)
     for (ALiterator i = areas.begin(); i != areas.end(); ++i){
         Area *ap = *i;
         if (wanted <= ap->getSize() && (ap->getSize() - wanted) < lowestBestFitSize){
@@ -82,13 +92,11 @@ Area *BestFit::searcher(int wanted)
             Area *remaining = bestFitArea->split(wanted);
             areas.insert(next, remaining);
         }
-
         return bestFitArea;
     }
-
     return 0;
 }
-
+/// Fragmentatie van het geheugen
 bool BestFit::reclaim()
 {
     require(!areas.empty());		// sanity check

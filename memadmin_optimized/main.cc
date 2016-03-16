@@ -169,10 +169,12 @@ void	doOptions(int argc, char *argv[])
 				beheerders.push_back( new NextFit2 );
 				break;
 			// TODO:
-			/*
+
 			case 'b': // -b = BestFit allocator gevraagd
 				beheerders.push_back( new BestFit );
 				break;
+
+            /*
 			case 'B': // -B = BestFit2 allocator gevraagd
 				beheerders.push_back( new BestFit2 );
 				break;
@@ -207,10 +209,71 @@ void	doOptions(int argc, char *argv[])
 /// Programma executie begint hier ...
 int  main(int argc, char *argv[])
 {
-    BestFit f(true);
-    f.setSize(10240);
-    Area *ap = f.alloc(1000);
-    Area *ap2 = f.alloc(1000);
+	// Hier begint het echte werk
+	try {
+		// De meegegeven opties afhandelen.
+		// Neveneffect: dit zal diverse globale variabelen veranderen!
+		doOptions(argc, argv);
+
+		// --- sanity checks ---
+		// Omvang van het beheerde geheugen
+		check(size > 0);
+		// Het aantal allocaties moet minstens 2 zijn
+		// (ivm berekening standaard deviatie!)
+		// Bij een random-scenario is dit helaas geen garantie
+		// van correctheid omdat er ook nog 'free' acties zijn.
+		if (aantal < 2) {
+			cerr << AC_RED "Het aantal moet minstens 2 zijn" AA_RESET "\n";
+			exit(EXIT_FAILURE);
+		}
+		// Is er wel een geheugen-beheerder module gekozen ?
+		if (beheerders.empty()) {
+			// Ahum, gebruiker's foutje ...
+			cerr << AC_RED "Eh, geen geheugen-beheerder gekozen ..." AA_RESET "\n";
+			tellOptions(argv[0]);	// vertel wat kan.
+			exit(EXIT_FAILURE);
+		}
+		// --- oke ---
+
+		// For all chosen allocators do
+		for (Allocator* beheerder : beheerders)
+		{
+			// Stel de geheugen-beheerder in ...
+			beheerder->setSize(size);
+			beheerder->setCheck(cflag);
+
+			// ... en maak dan een pseudo-applicatie met die beheerder
+			Application  *mp = new Application(beheerder, size);
+
+			if (tflag) {    // De -t optie gezien ?
+				cout << AC_BLUE "Testing " << beheerder->getType()
+					 << " with " << size << " units\n" AA_RESET;
+				mp->testing(); // ga dan de code testen
+			} else {
+				cout << AC_BLUE "Measuring " << beheerder->getType()
+					 << " doing " << aantal << " calls on " << size << " units\n" AA_RESET;
+//				mp->randomscenario(aantal, vflag);
+				// TODO:
+				// .. vervang straks 'randomscenario' door iets toepasselijkers
+				// zodat je ook voorspelbare scenarios kan afhandelen.
+				mp->customScenario(aantal, cflag);
+			}
+
+			// Nu alles weer netjes opruimen
+			delete  mp;
+			delete  beheerder;
+		}// for-each
+
+	} catch (const char *error) {
+		cerr << AC_RED "OEPS: " << error << AA_RESET << endl;
+		exit(EXIT_FAILURE);
+	} catch (const std::exception& error) {
+		cerr << AC_RED << error.what() << AA_RESET << endl;
+		exit(EXIT_FAILURE);
+	} catch (...) {
+		cerr << AC_RED "OEPS: Some unexpected exception occurred" AA_RESET << endl;
+		exit(EXIT_FAILURE);
+	}
 
 	return EXIT_SUCCESS;
 }
