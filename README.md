@@ -1,7 +1,8 @@
-## C++ Memory management
+##`C++ Memory management`
 
 #Fitters
-*First-fit
-*Best-fit
-*Next-fit
-*Random-fits
+
+- *First-fit*
+- *Best-fit*
+- *Next-fit*
+- *Random-fit*
