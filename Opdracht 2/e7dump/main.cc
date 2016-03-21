@@ -12,31 +12,46 @@
 
 // C/C++/STL specific
 #include <iostream>	    // for: std::cout, std::endl
+#include <fstream>
 #include <ctime>		// for: ctime()
 #include <cstdlib>		// for: EXIT_SUCCESS, EXIT_FAILURE
 #include <unistd.h>		// for: close() etc
 #include <fcntl.h>		// for: O_WRONLY etc
 
+// The include files for the unix 7-th Edition Filesystem
+#include "e7filsys.h"
+#include "e7ino.h"
+#include "e7dir.h"
+
 // Our own classes
 #include "Device.h"		// the "device driver"
 #include "Block.h"		// the "data blocks"
 
+using namespace std;
 
 // ================================================================
 
 // TODO: write all the functions etc you need for this assignment
-void	dump( const char* floppie )
+void	dump( const char* floppie)
 {
+    ofstream out ("log.txt");
+    if (out.is_open()){
+        out << "Opening device \'" << floppie << "\'" << endl;
+        Device device(floppie);
+        out << "|--------------------------------------------|" << endl;
+
+    }
+    out.close();
 }
 
 // ================================================================
 
 // Main is just the TUI
 int  main(int argc, const char* argv[])
-{
+{ofstream
 	try {
 // Note: To get your output into file 'log.txt', change the 0 below into a 1
-#if	0
+#if	1
 		std::cerr << "Sending output to log.txt" << std::endl;
 		close(1);
 		if( open("log.txt", O_WRONLY|O_TRUNC|O_CREAT, 0666) < 0)
@@ -46,7 +61,7 @@ int  main(int argc, const char* argv[])
 		std::cout << std::showbase;
 
 		// Pass the given parameter or use the default filename ?
-		dump((argc > 1) ? argv[1] : "floppie.img");
+        dump((argc > 1) ? argv[1] : "floppie.img");
 		return EXIT_SUCCESS;
 	} catch(const unix_error& e) {
 		std::cerr << AC_RED "SYSTEM: " << e.what() << AA_RESET << std::endl;
