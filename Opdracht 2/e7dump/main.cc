@@ -48,7 +48,7 @@ void	dump( const char* floppie)
 
 // Main is just the TUI
 int  main(int argc, const char* argv[])
-{ofstream
+{
 	try {
 // Note: To get your output into file 'log.txt', change the 0 below into a 1
 #if	1
