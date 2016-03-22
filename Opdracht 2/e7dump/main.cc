@@ -31,6 +31,31 @@ using namespace std;
 
 // ================================================================
 
+void readSuperBlock(Device& device, ostream& out)
+{
+
+}
+
+void readFree(Device& device, ostream& out, daddr_x addr)
+{
+
+}
+
+void readRootNode(Device& device, ostream& out)
+{
+
+}
+
+void readInodes(Device& device, ostream& out, ino_x addr)
+{
+
+}
+
+void readWrites(dinode *dinode, ostream& out)
+{
+
+}
+
 // TODO: write all the functions etc you need for this assignment
 void	dump( const char* floppie)
 {
@@ -39,7 +64,12 @@ void	dump( const char* floppie)
         out << "Opening device \'" << floppie << "\'" << endl;
         Device device(floppie);
         out << "|--------------------------------------------|" << endl;
-
+        readSuperBlock(device, file);
+        out << endl;
+        out << "|--------------------------------------------|" << endl;
+        readRootNode(device, file);
+        out << endl;
+        out << "|--------------------------------------------|" << endl;
     }
     out.close();
 }
