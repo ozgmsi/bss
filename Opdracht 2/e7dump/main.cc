@@ -34,7 +34,7 @@ using namespace std;
 void readSuperBlock(Device& device, ostream& out)
 {
     Block *sb = device.getBlock(SUPERB);
-    out << "Dump of superblock on" << sb->u.fs.s_fname << "." << sb->u.fs.s_fpack << endl;
+    out << "      Dump of superblock on" << sb->u.fs.s_fname << "." << sb->u.fs.s_fpack << endl;
     out << "|--------------------------------------------|" << endl;
     out << "userdata area starts in block: " << sb->u.fs.s_isize << endl;
     out << "number of blocks on volume is: " << sb->u.fs.s_fsize << endl;
@@ -55,11 +55,11 @@ void readSuperBlock(Device& device, ostream& out)
     out << "last update time was: " << ctime(&sb->u.fs.s_time) << endl;
     out << "total number of free block" << sb->u.fs.s_tfree << endl;
     out << "total number of inodes" << sb->u.fs.s_tinode << endl;
-    out << "Interleave factors are: " << sb->u.fs.s_m << " n=" << sb->u.fs.s_n << endl;
+    out << "Interleave factors are: " << "m=" << sb->u.fs.s_m << " n=" << sb->u.fs.s_n << endl;
     out << "File system name" << sb->u.fs.s_fname << endl;
     out << "File system pack" << sb->u.fs.s_fpack << endl;
     out << "|--------------------------------------------|" << endl;
-    out << "Rest of free list continues in block " << sb->u.fs.s_free[0] << endl;
+    out << "   Rest of free list continues in block " << sb->u.fs.s_free[0] << endl;
     out << "|--------------------------------------------|" << endl;
     readFree(device, out, sb->u.fs.free[0]);
     sb.release();
@@ -71,7 +71,7 @@ void readFree(Device& device, ostream& out, daddr_x addr)
         return;
     }
     Block *fl = device.getBlock(addr);
-    out << "Freeblock " << addr << ": " << fl->u.fb.df_nfree << "(max 50)" << endl;
+    out << "Freeblock " << addr << ": " << fl->u.fb.df_nfree << " (max 50)" << endl;
     for (int i = 0; i < fl->u.fb.df_nfree; i++){
         out << " " << fl->u.fb.df_free[i];
     }
@@ -84,7 +84,7 @@ void readRootNode(Device& device, ostream& out)
 {
     Block *inode = device.getBlock(SUPERB);
     int inodes = (inode->u->fs.s_isize-2) * INOPB;
-    out << "Reading " << inodes << "inodes" << endl;
+    out << "     Examining " << inodes << " inodes" << endl;
     out << "|--------------------------------------------|" << endl;
     for (int i = 1; i < inodes; i++){
         readInodes(device, out, i);
@@ -104,26 +104,26 @@ void readInodes(Device& device, ostream& out, ino_x addr)
 
     out << "Reading inode " << addr << endl;
     readWrites(dn, out);
-    out << "nlink = " << dn->di_nlink << " uid =" << dn->di_uid << " gid =" << dn->di_gid << endl;
+    out << "nlink = " << dn->di_nlink << " uid = " << dn->di_uid << " gid = " << dn->di_gid << endl;
     time_t time = dn->di_atime;
     out << "atime = " << ctime(&time);
     time = dn->di_mtime;
     out << "mtime = " << ctime(&time);
     time = dn->di_ctime;
     out << "ctime = " << ctime(&time);
-    out << "size = " << dn->di_size << " (maxblks =" << dn->di_size == 0 ? 0 : (dn->di_size / 512 + 1) << ")" << endl
+    out << "size = " << dn->di_size << " (this file uses at most " << dn->di_size == 0 ? 0 : (dn->di_size / 512 + 1) << " datablocks)" << endl
     daddr_x da[NADDR];
     inode->l3tol(da, dn->di_addr);
-    out << "addr:";
+    out << "addr: ";
     for (int i = 0; i < NADDR; ++i){
-        out << " " << da[i];
+        out << da[i] << " ";
     }
     out << endl;
     if (da[0] == 0){
-        out << "Direct blocks in inode";
+        out << "Direct blocks in inode ";
         for (int i = 0; i < 10; i++){
             if (da[i] != 0){
-                out << " " da[i];
+                out << da[i] << " " ;
             }
         }
         out << endl;
@@ -133,7 +133,7 @@ void readInodes(Device& device, ostream& out, ino_x addr)
         out << "Block numbers in level 1 indirection block " << da[10] << ":";
         Block* l1 = device.getBlock(da[10]);
         for (int = 0; i < NINDIR; i++){
-            out << " " << l1->u.bno[i];
+            out << l1->u.bno[i] << " ";
         }
         out << endl;
         l1->release();
@@ -146,7 +146,7 @@ void readInodes(Device& device, ostream& out, ino_x addr)
                 if (l2->u.bno[i] != 0){
                     Block* b = device.getBlock(l2->u.bno[i]);
                     for (int j = 0; j < NINDIR; ++j){
-                        out << " " << b->u.bno[j];
+                        out << b->u.bno[j] << " ";
                     }
                     b.release();
                 }
@@ -155,7 +155,7 @@ void readInodes(Device& device, ostream& out, ino_x addr)
             l2->release();
 
             if (da[12] != 0){
-                out << "Block numbers in level 3 indirection block" << da[12] << ":";
+                out << "Block numbers in level 3 indirection block " << da[12] << ":";
                 Block* l3 = device.getBlock(da[12]);
                 for (int i = 0; i < NINDIR; ++i){
                     out << "[[" << l3->u.bno[i] << "]]";
@@ -181,14 +181,13 @@ void readInodes(Device& device, ostream& out, ino_x addr)
     }
     if ((dn->di_mode & X_IFMT) == X_IFDIR) {
         out << "Contents of directory: " << endl;
-
         for (int i = 0; i < NADDR; i++){
             if (da[i] != 0){
                 Block* dirBlock = device.getBlock(da[i]);
                 for (int j = 0; j < NDIRENT; j++){
                     if (dirBlock->u.dir[j].d_name[0] != '\0'){ /// check if the filename is not null
                         if (dirBlock->u.dir[j].d_ino != 0) { /// check if the requested file doesn't have a inode with index 0 which means deleted.
-                            out << "   " << dirBlock->u.dir[j].d_ino << " '" << dirBlock->u.dir[j].d_name << "'" << endl;
+                            out << "\t" << dirBlock->u.dir[j].d_ino << " '" << dirBlock->u.dir[j].d_name << "'" << endl;
                         }
                     }
                 }
@@ -219,12 +218,11 @@ void readWrites(dinode *dinode, ostream& out)
     out << ")" << dec << endl;
 }
 
-// TODO: write all the functions etc you need for this assignment
 void	dump( const char* floppie)
 {
     ofstream out ("log.txt");
     if (out.is_open()){
-        out << "Opening device \'" << floppie << "\'" << endl;
+        out << "       Opening device \'" << floppie << "\'" << endl;
         Device device(floppie);
         out << "|--------------------------------------------|" << endl;
         readSuperBlock(device, file);
