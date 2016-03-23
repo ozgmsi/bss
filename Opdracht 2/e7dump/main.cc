@@ -94,12 +94,129 @@ void readRootNode(Device& device, ostream& out)
 
 void readInodes(Device& device, ostream& out, ino_x addr)
 {
+    Block* inode = device.getBlock(itod(addr));
+    dinode* dn = &in->u.dino[itoo(addr)];
 
+    if (dn->di_mode){
+        inode->release();
+        return;
+    }
+
+    out << "Reading inode " << addr << endl;
+    readWrites(dn, out);
+    out << "nlink = " << dn->di_nlink << " uid =" << dn->di_uid << " gid =" << dn->di_gid << endl;
+    time_t time = dn->di_atime;
+    out << "atime = " << ctime(&time);
+    time = dn->di_mtime;
+    out << "mtime = " << ctime(&time);
+    time = dn->di_ctime;
+    out << "ctime = " << ctime(&time);
+    out << "size = " << dn->di_size << " (maxblks =" << dn->di_size == 0 ? 0 : (dn->di_size / 512 + 1) << ")" << endl
+    daddr_x da[NADDR];
+    inode->l3tol(da, dn->di_addr);
+    out << "addr:";
+    for (int i = 0; i < NADDR; ++i){
+        out << " " << da[i];
+    }
+    out << endl;
+    if (da[0] == 0){
+        out << "Direct blocks in inode";
+        for (int i = 0; i < 10; i++){
+            if (da[i] != 0){
+                out << " " da[i];
+            }
+        }
+        out << endl;
+    }
+
+    if (da[10] != 0){
+        out << "Block numbers in level 1 indirection block " << da[10] << ":";
+        Block* l1 = device.getBlock(da[10]);
+        for (int = 0; i < NINDIR; i++){
+            out << " " << l1->u.bno[i];
+        }
+        out << endl;
+        l1->release();
+
+        if (da[11] != 0){
+            out << "Block numbers in level 2 indirection block " << da[11] << ":";
+            Block* l2 = device.getBlock(da[11]);
+            for (int = 0; i < NINDIR; ++i){
+                out << " [" << l2->u.bno[i] << "]";
+                if (l2->u.bno[i] != 0){
+                    Block* b = device.getBlock(l2->u.bno[i]);
+                    for (int j = 0; j < NINDIR; ++j){
+                        out << " " << b->u.bno[j];
+                    }
+                    b.release();
+                }
+            }
+            out << endl;
+            l2->release();
+
+            if (da[12] != 0){
+                out << "Block numbers in level 3 indirection block" << da[12] << ":";
+                Block* l3 = device.getBlock(da[12]);
+                for (int i = 0; i < NINDIR; ++i){
+                    out << "[[" << l3->u.bno[i] << "]]";
+                    if (l3->u.bno[i] != 0){
+                        Block* b = device.getBlock(l3->u.bno[i]);
+                        for (int j = 0; j < NINDIR; ++j){
+                            out << " [" << b->u.bno[j] << "]";
+                            if (b->u.bno[j] != 0) {
+                                Block* b1 = device.getBlock(b->u.bno[j]);
+                                for (int k = 0; k < NINDIR; ++k){
+                                    out << " " << b1->u.bno[k];
+                                }
+                                b1->release();
+                            }
+                        }
+                        b->release();
+                    }
+                }
+                out << endl;
+                l3->release();
+            }
+        }
+    }
+    if ((dn->di_mode & X_IFMT) == X_IFDIR) {
+        out << "Contents of directory: " << endl;
+
+        for (int i = 0; i < NADDR; i++){
+            if (da[i] != 0){
+                Block* dirBlock = device.getBlock(da[i]);
+                for (int j = 0; j < NDIRENT; j++){
+                    if (dirBlock->u.dir[j].d_name[0] != '\0'){ /// check if the filename is not null
+                        if (dirBlock->u.dir[j].d_ino != 0) { /// check if the requested file doesn't have a inode with index 0 which means deleted.
+                            out << "   " << dirBlock->u.dir[j].d_ino << " '" << dirBlock->u.dir[j].d_name << "'" << endl;
+                        }
+                    }
+                }
+                dirBlock->release();
+            }
+        }
+    }
+    out << endl;
+    inode->release();
 }
 
 void readWrites(dinode *dinode, ostream& out)
 {
-
+    out << "mode = " << oct << dinode->di_mode << dec << " (" << (dinode->di_mode & X_IFMT) == X_IFDIR ? "d" : "-";
+    out << ((dinode->di_mode & X_IFMT) == X_IFMT) ? "d" : "-";
+    out << (dinode->di_mode & X_ISUID) ? "u" : "-";
+    out << (dinode->di_mode & X_ISGID) ? "g" : "-";
+    out << (dinode->di_mode & X_ISVTX) ? "t" : "-";
+    out << (dinode->di_mode & X_IUREAD) ? "r" : "-";
+    out << (dinode->di_mode & X_IUWRITE) ? "w" : "-";
+    out << (dinode->di_mode & X_IUEXEC) ? "x" : "-";
+    out << (dinode->di_mode & X_IGREAD) ? "r" : "-";
+    out << (dinode->di_mode & X_IGWRITE) ? "w" : "-";
+    out << (dinode->di_mode & X_IGEXEC) ? "x" : "-";
+    out << (dinode->di_mode & X_IOREAD) ? "r" : "-";
+    out << (dinode->di_mode & X_IOWRITE) ? "w" : "-";
+    out << (dinode->di_mode & X_IOEXEC) ? "x" : "-";
+    out << ")" << dec << endl;
 }
 
 // TODO: write all the functions etc you need for this assignment
