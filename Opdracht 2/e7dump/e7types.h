@@ -59,4 +59,6 @@ STATIC_ASSERT(sizeof(time_x)==4);	// verify size
 //  1: assign the time_x value to a time_t variable,
 //  2: use ctime() to convert that time_t value to text.
 
+typedef unsigned long ulong;
+
 #endif /*E7TYPES_H*/
