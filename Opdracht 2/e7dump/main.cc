@@ -32,7 +32,7 @@ using namespace std;
 // ================================================================
 void readFree(Device&, ostream&, daddr_x);
 void readInodes(Device&, ostream&, ino_x);
-void readWrites(dinode*, ostream&);
+void writeInodePermissions(dinode*, ostream&);
 
 
 void readSuperBlock(Device& device, ostream& out)
@@ -107,7 +107,7 @@ void readInodes(Device& device, ostream& out, ino_x addr)
     }
 
     out << "Reading inode " << addr << endl;
-    readWrites(dn, out);
+    writeInodePermissions(dn, out);
     out << "nlink = " << dn->di_nlink << " uid = " << dn->di_uid << " gid = " << dn->di_gid << endl;
     time_t time = dn->di_atime;
     out << "atime = " << ctime(&time);
@@ -208,14 +208,10 @@ void readInodes(Device& device, ostream& out, ino_x addr)
     inode->release();
 }
 
-void readWrites(dinode* dinode, ostream& out)
+void writeInodePermissions(dinode* dinode, ostream& out)
 {
     out << "mode = " << oct << dinode->di_mode << dec << " (";
-    if ((dinode->di_mode & X_IFMT) == X_IFDIR){
-        out << "d";
-    } else {
-        out << "-";
-    }
+    out << (((dinode->di_mode & X_IFMT) == X_IFDIR) ? "d" : "-");
     out << (((dinode->di_mode & X_IFMT) == X_IFMT) ? "d" : "-");
     out << ((dinode->di_mode & X_ISUID) ? "u" : "-");
     out << ((dinode->di_mode & X_ISGID) ? "g" : "-");

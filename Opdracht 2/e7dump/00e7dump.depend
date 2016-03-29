@@ -1,0 +1,101 @@
+# depslib dependency file v1.0
+1458649408 source:d:\repositories\besturingssystemen\opdracht 2\e7dump\assert_error.cc
+	<string>
+	<sstream>
+	"assert_error.h"
+
+1458649408 d:\repositories\besturingssystemen\opdracht 2\e7dump\assert_error.h
+	<stdexcept>
+
+1458649408 source:d:\repositories\besturingssystemen\opdracht 2\e7dump\block.cc
+	"asserts.h"
+	"endian.h"
+	"Block.h"
+
+1458649408 d:\repositories\besturingssystemen\opdracht 2\e7dump\asserts.h
+	"where.h"
+	"assert_error.h"
+
+1458649410 d:\repositories\besturingssystemen\opdracht 2\e7dump\where.h
+
+1458649408 d:\repositories\besturingssystemen\opdracht 2\e7dump\block.h
+	<string>
+	"e7types.h"
+	"e7const.h"
+	"e7filsys.h"
+	"e7fblk.h"
+	"e7ino.h"
+	"e7dir.h"
+
+1459249770 d:\repositories\besturingssystemen\opdracht 2\e7dump\e7types.h
+	<cstdint>
+
+1458649410 d:\repositories\besturingssystemen\opdracht 2\e7dump\e7const.h
+
+1458649410 d:\repositories\besturingssystemen\opdracht 2\e7dump\e7filsys.h
+	"e7types.h"
+
+1458649410 d:\repositories\besturingssystemen\opdracht 2\e7dump\e7fblk.h
+	"e7types.h"
+	"e7filsys.h"
+
+1458649410 d:\repositories\besturingssystemen\opdracht 2\e7dump\e7ino.h
+	"e7types.h"
+
+1458649410 d:\repositories\besturingssystemen\opdracht 2\e7dump\e7dir.h
+	"e7types.h"
+
+1458649408 source:d:\repositories\besturingssystemen\opdracht 2\e7dump\cstr.cc
+	"cstr.h"
+
+1458649408 d:\repositories\besturingssystemen\opdracht 2\e7dump\cstr.h
+	<ostream>
+
+1458649408 source:d:\repositories\besturingssystemen\opdracht 2\e7dump\device.cc
+	"asserts.h"
+	"unix_error.h"
+	<fcntl.h>
+	<unistd.h>
+	<sys/stat.h>
+	<cstdio>
+	"Block.h"
+	"Device.h"
+	"e7const.h"
+
+1458649410 d:\repositories\besturingssystemen\opdracht 2\e7dump\unix_error.h
+	<stdexcept>
+	<string>
+	"where.h"
+
+1458649408 d:\repositories\besturingssystemen\opdracht 2\e7dump\device.h
+	<map>
+	"e7types.h"
+
+1458649410 source:d:\repositories\besturingssystemen\opdracht 2\e7dump\unix_error.cc
+	<cstring>
+	<cerrno>
+	<sstream>
+	"unix_error.h"
+
+1459252499 source:d:\repositories\besturingssystemen\opdracht 2\e7dump\main.cc
+	"ansi.h"
+	"asserts.h"
+	"unix_error.h"
+	"cstr.h"
+	<iostream>
+	<fstream>
+	<ctime>
+	<cstdlib>
+	<unistd.h>
+	<fcntl.h>
+	"e7filsys.h"
+	"e7ino.h"
+	"e7dir.h"
+	"Device.h"
+	"Block.h"
+
+1458649408 d:\repositories\besturingssystemen\opdracht 2\e7dump\ansi.h
+	"common.h"
+
+1458649408 d:\repositories\besturingssystemen\opdracht 2\e7dump\common.h
+

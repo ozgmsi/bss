@@ -75,7 +75,7 @@ Freeblock 677: 50 (max 50)
      Examining 456 inodes
 |--------------------------------------------|
 Reading inode 1
-mode=100000 (--------------)
+mode = 100000 (--------------)
 nlink = 0 uid = 0 gid = 0
 atime = Mon Sep 09 23:22:54 1985
 mtime = Mon Sep 09 23:22:54 1985
@@ -85,7 +85,7 @@ addr: 0 0 0 0 0 0 0 0 0 0 0 0 0
 Direct blocks in inode 
 
 Reading inode 2
-mode=40777 (d----rwxrwxrwx)
+mode = 40777 (d----rwxrwxrwx)
 nlink = 5 uid = 26 gid = 0
 atime = Tue Mar 17 12:38:07 1987
 mtime = Tue Mar 17 12:38:22 1987
@@ -103,7 +103,7 @@ Contents of directory:
 	116 'eendir'
 
 Reading inode 3
-mode=40755 (d----rwxr-xr-x)
+mode = 40755 (d----rwxr-xr-x)
 nlink = 2 uid = 26 gid = 0
 atime = Wed Feb 25 12:40:40 1987
 mtime = Mon Sep 09 23:22:54 1985
@@ -115,7 +115,7 @@ Contents of directory:
 	2 '..'
 
 Reading inode 4
-mode=100644 (-----rw-r--r--)
+mode = 100644 (-----rw-r--r--)
 nlink = 1 uid = 31 gid = 0
 atime = Fri Feb 20 17:01:29 1987
 mtime = Fri Feb 20 17:02:43 1987
@@ -126,7 +126,7 @@ Block numbers in level 1 indirection block 1421:0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
 Block numbers in level 2 indirection block 1020: [0] [0] [0] [0] [0] [0] [1021]0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1022 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0  [0] [0] [0] [0] [0] [0] [0] [241]0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 247 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0  [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0] [0]
 
 Reading inode 5
-mode=104777 (--u--rwxrwxrwx)
+mode = 104777 (--u--rwxrwxrwx)
 nlink = 1 uid = 31 gid = 0
 atime = Fri Feb 20 17:02:42 1987
 mtime = Fri Feb 20 17:01:05 1987
@@ -136,7 +136,7 @@ addr: 1424 936 927 928 937 934 935 1017 1018 926 929 0 0
 Block numbers in level 1 indirection block 929:1016 1019 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
 
 Reading inode 6
-mode=100664 (-----rw-rw-r--)
+mode = 100664 (-----rw-rw-r--)
 nlink = 1 uid = 31 gid = 0
 atime = Fri Feb 20 17:02:09 1987
 mtime = Fri Feb 20 17:03:27 1987
@@ -146,7 +146,7 @@ addr: 1023 1024 1025 1006 1007 1008 924 925 1430 1426 1425 0 0
 Block numbers in level 1 indirection block 1425:939 1015 930 1012 1013 1014 1010 931 221 220 219 218 215 216 217 1427 1428 1429 938 244 245 246 240 285 286 287 242 243 269 270 271 272 1432 1011 932 933 1431 1437 1438 1439 1009 98 208 207 260 261 262 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
 
 Reading inode 7
-mode=40775 (d----rwxrwxr-x)
+mode = 40775 (d----rwxrwxr-x)
 nlink = 2 uid = 31 gid = 0
 atime = Tue Mar 17 12:40:26 1987
 mtime = Tue Mar 17 12:40:03 1987
@@ -167,7 +167,7 @@ Contents of directory:
 	17 'types.h'
 
 Reading inode 8
-mode=100444 (-----r--r--r--)
+mode = 100444 (-----r--r--r--)
 nlink = 1 uid = 31 gid = 0
 atime = Tue Mar 17 12:40:00 1987
 mtime = Tue Mar 17 12:40:01 1987
@@ -176,7 +176,7 @@ size = 1463 (this file uses at most 3 datablocks)
 addr: 264 227 228 0 0 0 0 0 0 0 0 0 0 
 
 Reading inode 9
-mode=100664 (-----rw-rw-r--)
+mode = 100664 (-----rw-rw-r--)
 nlink = 1 uid = 31 gid = 0
 atime = Fri Feb 20 17:00:25 1987
 mtime = Thu Feb 19 15:45:25 1987
@@ -185,7 +185,7 @@ size = 713 (this file uses at most 2 datablocks)
 addr: 1433 1434 0 0 0 0 0 0 0 0 0 0 0 
 
 Reading inode 10
-mode=100444 (-----r--r--r--)
+mode = 100444 (-----r--r--r--)
 nlink = 1 uid = 31 gid = 0
 atime = Tue Mar 17 12:40:01 1987
 mtime = Tue Mar 17 12:40:01 1987
@@ -194,7 +194,7 @@ size = 347 (this file uses at most 1 datablocks)
 addr: 229 0 0 0 0 0 0 0 0 0 0 0 0 
 
 Reading inode 11
-mode=100444 (-----r--r--r--)
+mode = 100444 (-----r--r--r--)
 nlink = 1 uid = 31 gid = 0
 atime = Tue Mar 17 12:40:01 1987
 mtime = Tue Mar 17 12:40:01 1987
@@ -203,7 +203,7 @@ size = 1057 (this file uses at most 3 datablocks)
 addr: 230 231 232 0 0 0 0 0 0 0 0 0 0 
 
 Reading inode 12
-mode=100444 (-----r--r--r--)
+mode = 100444 (-----r--r--r--)
 nlink = 1 uid = 31 gid = 0
 atime = Tue Mar 17 12:40:01 1987
 mtime = Tue Mar 17 12:40:02 1987
@@ -212,7 +212,7 @@ size = 1582 (this file uses at most 4 datablocks)
 addr: 233 234 235 236 0 0 0 0 0 0 0 0 0 
 
 Reading inode 13
-mode=100444 (-----r--r--r--)
+mode = 100444 (-----r--r--r--)
 nlink = 1 uid = 31 gid = 0
 atime = Tue Mar 17 12:40:02 1987
 mtime = Tue Mar 17 12:40:02 1987
@@ -221,7 +221,7 @@ size = 1331 (this file uses at most 3 datablocks)
 addr: 237 238 239 0 0 0 0 0 0 0 0 0 0 
 
 Reading inode 14
-mode=100444 (-----r--r--r--)
+mode = 100444 (-----r--r--r--)
 nlink = 1 uid = 31 gid = 0
 atime = Tue Mar 17 12:40:02 1987
 mtime = Tue Mar 17 12:40:02 1987
@@ -230,7 +230,7 @@ size = 114 (this file uses at most 1 datablocks)
 addr: 273 0 0 0 0 0 0 0 0 0 0 0 0 
 
 Reading inode 15
-mode=100444 (-----r--r--r--)
+mode = 100444 (-----r--r--r--)
 nlink = 1 uid = 31 gid = 0
 atime = Tue Mar 17 12:40:02 1987
 mtime = Tue Mar 17 12:40:02 1987
@@ -239,7 +239,7 @@ size = 1004 (this file uses at most 2 datablocks)
 addr: 274 275 0 0 0 0 0 0 0 0 0 0 0 
 
 Reading inode 16
-mode=100444 (-----r--r--r--)
+mode = 100444 (-----r--r--r--)
 nlink = 1 uid = 31 gid = 0
 atime = Tue Mar 17 12:40:02 1987
 mtime = Tue Mar 17 12:40:02 1987
@@ -248,7 +248,7 @@ size = 3537 (this file uses at most 7 datablocks)
 addr: 276 258 259 282 283 284 280 0 0 0 0 0 0 
 
 Reading inode 17
-mode=100444 (-----r--r--r--)
+mode = 100444 (-----r--r--r--)
 nlink = 1 uid = 31 gid = 0
 atime = Tue Mar 17 12:40:03 1987
 mtime = Tue Mar 17 12:40:03 1987
@@ -257,7 +257,7 @@ size = 2316 (this file uses at most 5 datablocks)
 addr: 281 288 289 290 278 0 0 0 0 0 0 0 0 
 
 Reading inode 28
-mode=100664 (-----rw-rw-r--)
+mode = 100664 (-----rw-rw-r--)
 nlink = 1 uid = 31 gid = 0
 atime = Thu Feb 19 16:03:12 1987
 mtime = Thu Feb 19 16:03:12 1987
@@ -267,7 +267,7 @@ addr: 0 0 0 0 0 0 0 0 0 0 0 0 0
 Direct blocks in inode 
 
 Reading inode 116
-mode=41775 (d---trwxrwxr-x)
+mode = 41775 (d---trwxrwxr-x)
 nlink = 2 uid = 31 gid = 0
 atime = Tue Mar 17 09:27:22 1987
 mtime = Tue Mar 17 09:27:04 1987
@@ -282,7 +282,7 @@ Contents of directory:
 	6 'core'
 
 Reading inode 117
-mode=100644 (-----rw-r--r--)
+mode = 100644 (-----rw-r--r--)
 nlink = 1 uid = 31 gid = 0
 atime = Thu Feb 19 15:58:01 1987
 mtime = Thu Feb 19 15:59:35 1987
