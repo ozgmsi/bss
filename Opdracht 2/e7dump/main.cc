@@ -26,13 +26,11 @@
 // Our own classes
 #include "Device.h"		// the "device driver"
 #include "Block.h"		// the "data blocks"
+#include "main.h"
 
 using namespace std;
 
 // ================================================================
-void readFree(Device&, ostream&, daddr_x);
-void readInodes(Device&, ostream&, ino_x);
-void writeInodePermissions(dinode*, ostream&);
 
 
 void readSuperBlock(Device& device, ostream& out)
@@ -107,7 +105,7 @@ void readInodes(Device& device, ostream& out, ino_x addr)
     }
 
     out << "Reading inode " << addr << endl;
-    writeInodePermissions(dn, out);
+    readInodePermissions(dn, out);
     out << "nlink = " << dn->di_nlink << " uid = " << dn->di_uid << " gid = " << dn->di_gid << endl;
     time_t time = dn->di_atime;
     out << "atime = " << ctime(&time);
@@ -138,56 +136,8 @@ void readInodes(Device& device, ostream& out, ino_x addr)
         out << endl;
     }
 
-    if (da[10] != 0){
-        out << "Block numbers in level 1 indirection block " << da[10] << ":";
-        Block* l1 = device.getBlock(da[10]);
-        for (int i = 0; i < NINDIR; i++){
-            out << l1->u.bno[i] << " ";
-        }
-        out << endl;
-        l1->release();
+    readLevelBlocks(device, da, out);
 
-        if (da[11] != 0){
-            out << "Block numbers in level 2 indirection block " << da[11] << ":";
-            Block* l2 = device.getBlock(da[11]);
-            for (int i = 0; i < NINDIR; ++i){
-                out << " [" << l2->u.bno[i] << "]";
-                if (l2->u.bno[i] != 0){
-                    Block* b = device.getBlock(l2->u.bno[i]);
-                    for (int j = 0; j < NINDIR; ++j){
-                        out << b->u.bno[j] << " ";
-                    }
-                    b->release();
-                }
-            }
-            out << endl;
-            l2->release();
-
-            if (da[12] != 0){
-                out << "Block numbers in level 3 indirection block " << da[12] << ":";
-                Block* l3 = device.getBlock(da[12]);
-                for (int i = 0; i < NINDIR; ++i){
-                    out << "[[" << l3->u.bno[i] << "]]";
-                    if (l3->u.bno[i] != 0){
-                        Block* b = device.getBlock(l3->u.bno[i]);
-                        for (int j = 0; j < NINDIR; ++j){
-                            out << " [" << b->u.bno[j] << "]";
-                            if (b->u.bno[j] != 0) {
-                                Block* b1 = device.getBlock(b->u.bno[j]);
-                                for (int k = 0; k < NINDIR; ++k){
-                                    out << " " << b1->u.bno[k];
-                                }
-                                b1->release();
-                            }
-                        }
-                        b->release();
-                    }
-                }
-                out << endl;
-                l3->release();
-            }
-        }
-    }
     if ((dn->di_mode & X_IFMT) == X_IFDIR) {
         out << "Contents of directory: " << endl;
         for (int i = 0; i < NADDR; i++){
@@ -208,7 +158,71 @@ void readInodes(Device& device, ostream& out, ino_x addr)
     inode->release();
 }
 
-void writeInodePermissions(dinode* dinode, ostream& out)
+void readLevelBlocks(Device& device, daddr_x* da, ostream& out)
+{
+    if (da[10] != 0){
+        out << "Block numbers in level 1 indirection block " << da[10] << ":";
+        Block* l1 = device.getBlock(da[10]);
+        for (int i = 0; i < NINDIR; i++){
+            out << l1->u.bno[i] << " ";
+        }
+        out << endl;
+        l1->release();
+
+        readLevel2Blocks(device, da, out);
+    }
+}
+
+void readLevel2Blocks(Device& device, daddr_x* da, ostream& out)
+{
+    if (da[11] != 0){
+        out << "Block numbers in level 2 indirection block " << da[11] << ":";
+        Block* l2 = device.getBlock(da[11]);
+        for (int i = 0; i < NINDIR; ++i){
+            out << " [" << l2->u.bno[i] << "]";
+            if (l2->u.bno[i] != 0){
+                Block* b = device.getBlock(l2->u.bno[i]);
+                for (int j = 0; j < NINDIR; ++j){
+                    out << b->u.bno[j] << " ";
+                }
+                b->release();
+            }
+        }
+        out << endl;
+        l2->release();
+
+        readLevel3Blocks(device, da, out);
+    }
+}
+
+void readLevel3Blocks(Device& device, daddr_x* da, ostream& out)
+{
+    if (da[12] != 0){
+        out << "Block numbers in level 3 indirection block " << da[12] << ":";
+        Block* l3 = device.getBlock(da[12]);
+        for (int i = 0; i < NINDIR; ++i){
+            out << "[[" << l3->u.bno[i] << "]]";
+            if (l3->u.bno[i] != 0){
+                Block* b = device.getBlock(l3->u.bno[i]);
+                for (int j = 0; j < NINDIR; ++j){
+                    out << " [" << b->u.bno[j] << "]";
+                    if (b->u.bno[j] != 0) {
+                        Block* b1 = device.getBlock(b->u.bno[j]);
+                        for (int k = 0; k < NINDIR; ++k){
+                            out << " " << b1->u.bno[k];
+                        }
+                        b1->release();
+                    }
+                }
+                b->release();
+            }
+        }
+        out << endl;
+        l3->release();
+    }
+}
+
+void readInodePermissions(dinode* dinode, ostream& out)
 {
     out << "mode = " << oct << dinode->di_mode << dec << " (";
     out << (((dinode->di_mode & X_IFMT) == X_IFDIR) ? "d" : "-");

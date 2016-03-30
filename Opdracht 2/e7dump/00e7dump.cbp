@@ -56,6 +56,9 @@ You'll have to write your own main.cc this time.]]>
 		<Unit filename="e7types.h" />
 		<Unit filename="floppie.img" />
 		<Unit filename="main.cc" />
+		<Unit filename="main.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="unix_error.cc" />
 		<Unit filename="unix_error.h" />
 		<Unit filename="where.h" />
