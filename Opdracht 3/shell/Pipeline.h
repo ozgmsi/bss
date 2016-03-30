@@ -66,7 +66,11 @@ class	Pipeline
 		/// via pipes (See: unix manual: pipe(2))
 		void	execute();
 
-		// TODO: Add any other methods you need
+		bool    isBuiltin() const;
+
+		const int PIPE_READ = 0;
+
+		const int PIPE_WRITE = 1;
 };
 
 // vim:ai:aw:ts=4:sw=4:

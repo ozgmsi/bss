@@ -62,7 +62,7 @@ class	Command
 		/// (Also see getenv(3), getcwd(3), access(2), execv(3)).
 		void	execute();
 
-		// TODO: Add any other methods you need
+		bool    isBuiltin() const;
 
 };
 

@@ -26,10 +26,10 @@ Shell::Shell(istream& input)
 void	Shell::main()
 {
 	// Ignore some signals
-	// TODO:
+	signal(SIGINT, SIG_IGN); // Ignore SIGINT as "parent" process
+    signal(SIGQUIT, SIG_IGN); // Ignore SIGQUIT as "parent" process
 	// but never these ones
-	// TODO:
-
+	signal(SIGCHLD, SIG_DFL); // (Isn't default behaviour ignore for SIGCHLD?)
 
 	// The command loop
 	do {

@@ -56,7 +56,28 @@ bool	Command::isEmpty() const
 	return input.empty() && output.empty() && words.empty();
 }
 
+bool    Command::isBuiltin() const
+{
+    size_t found;
+    for (vector<string>::const_iterator i = words.begin(); i != words.end(); ++i){
+        string word = *i;
 
+        found = word.find("exit");
+        if (found != string::npos){
+            return true;
+        }
+
+        found = word.find("logout");
+        if (found != string::npos){
+            return true;
+        }
+
+        found = word.find("cd");
+        if (found != string::npos){
+            return true;
+        }
+    }
+}
 // ===========================================================
 
 
@@ -78,6 +99,71 @@ void	Command::execute()
 	// Also see: close(2), open(2), getcwd(3), getenv(3), access(2), execv(2), exit(2)
 
 	// TODO: replace the code below with something that really works
+
+	umask(S_IWOTH);
+	if (hasInput()){
+        int inputf = open(input.c_str(), O_RDONLY);
+        dup2(inputf, STDIN_FILENO);
+        close(inputf);
+	}
+	if (hasOutput()){
+        int outputf;
+        if (append) {
+            outputf = open(output.c_str(), O_APPEND|O_WRONLY, 0777);
+            if (outputf == -1){
+                outputf = open(output.c_str(), O_CREAT|O_WRONLY, 0777);
+            }
+        } else {
+            outputf = open(output.c_str(), O_CREAT | O_WRONLY, 0777);
+        }
+
+        if (outputf == -1){
+            cerr << "Kon bestand niet openen" << endl;
+            exit(EXIT_FAILURE);
+        }
+
+        dup2(outputf, STDOUT_FILENO);
+        close(outputf);
+	}
+
+	std::vector<char*> commandAttributes(words.size() + 1);
+	for (size_t i = 0; i != words.size(); ++i){
+        commandAttributes[i] = &words[i][0];
+	}
+
+	if (commandAttributes[0] === '\0'){
+        cerr << "\0 is not a valid filename!" << endl;
+        exit(EXIT_FAILURE);
+	}
+
+	if (isBuiltin()) {
+        if (words[0].find("cd") != string:npos){
+            if (1 < words.size()) {
+                cout << "Changing working directory to: " << words[1] << endl;
+                chdir(words[1].c_str());
+            }
+        } else if (words[0].find("exit") != string::npos || words[0].find("logout") != string::npos) {
+            cout << "Exiting!" << endl;
+            exit(EXIT_FAILURE);
+        }
+	} else {
+        if (strstr(commandAttributes[0], "/") != 0) {
+            if (commandAttributes[0][0] != '/'){
+                char* cwd = get_current_dir_name();
+                string path = cwd;
+                path = path + '/' + commandAttributes[0];
+                commandAttributes[0] = (char*) path.c_str();
+            }
+        } else {
+            string path = getenv("PATH");
+            int pathSize = 0;
+            for (int i = 0; i < path.size(); i++) {
+                if (path[i] == ':'){
+                    pathSize++;
+                }
+            }
+        }
+	}
 
 #if 1	/* DEBUG code: Set to 0 to turn off the next block of code */
 	cerr <<"Command::execute ";

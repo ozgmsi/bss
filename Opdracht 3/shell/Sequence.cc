@@ -32,13 +32,6 @@ bool	Sequence::isEmpty()	const
 	return commands.empty();
 }
 
-
-// TODO:	Optional:
-//			Lookout somewhere for special commands such as 'exit',
-//			'logout', 'cd', etc, which may have to be
-//			done by the original shell process itself.
-
-
 // Execute the pipelines in this sequence one by one
 void	Sequence::execute()
 {
@@ -55,9 +48,41 @@ void	Sequence::execute()
 			if(j == commands.size()) {//DEBUG
 				cerr << "Sequence::FIRST PIPELINE\n";//DEBUG
 			}//DEBUG
-			// if (pp->isBuiltin()) ...
-			pp->execute();
-			// TODO
+			if (pp->isBuiltin()){
+                pp->execute();
+			} else {
+                pid_t cpid = fork();
+                if (cpid == 0){ /// if we are the child than execute the pipeline
+                    signal(SIGINT, SIG_DFL); /// We DON'T want to ignore SIGINT's as a child
+                    signal(SIGQUIT, SIG_DFL); /// We DON'T want to ignore SIGQUIT.
+
+                    if (pp->isBackground()){
+                        nice(5);
+                    }
+
+                    pp->execute();
+                } else if (cpid > 0) {
+                    if (!pp->background()) {
+                        int status;
+                        pid_t pid = wait(&status);
+
+                        if (WIFSIGNALED(status)) {
+                            cout << " Process ID " << pid << " was terminated by signal: " << strsignal(WTERMSIG(status));
+                        }
+#ifdef WCOREDUMP
+                        if (WCOREDUMP(status)) {
+                            cout << " (core dumped )";
+                        }
+#endif // WCOREDUMP
+                        cout << endl;
+
+                        int exitStatus = WEXITSTATUS(status);
+                        if (exitStatus > 0){
+                            cerr << "Process ID: " << pid << " exited with error status: " << exitStatus << endl;
+                        }
+                    }
+                }
+			}
 			if(j == 1) {//DEBUG
 				cerr << "Sequence::LAST PIPELINE\n";//DEBUG
 			} else {//DEBUG
