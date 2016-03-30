@@ -48,20 +48,24 @@ void	Sequence::execute()
 			if(j == commands.size()) {//DEBUG
 				cerr << "Sequence::FIRST PIPELINE\n";//DEBUG
 			}//DEBUG
+
+			/// check if pipeline is a built in, if so handle it on the main process.
 			if (pp->isBuiltin()){
-                pp->execute();
+                pp->execute(); /// execute without forking.
 			} else {
-                pid_t cpid = fork();
+                pid_t cpid = fork(); /// fork because, not a built in.
                 if (cpid == 0){ /// if we are the child than execute the pipeline
                     signal(SIGINT, SIG_DFL); /// We DON'T want to ignore SIGINT's as a child
                     signal(SIGQUIT, SIG_DFL); /// We DON'T want to ignore SIGQUIT.
 
+                    /// if pipeline has to run in background add increased nice.
                     if (pp->isBackground()){
                         nice(5);
                     }
 
                     pp->execute();
                 } else if (cpid > 0) {
+                    /// don't wait for background processes.
                     if (!pp->background()) {
                         int status;
                         pid_t pid = wait(&status);
@@ -75,7 +79,7 @@ void	Sequence::execute()
                         }
 #endif // WCOREDUMP
                         cout << endl;
-
+                        /// check if exited with an error.
                         int exitStatus = WEXITSTATUS(status);
                         if (exitStatus > 0){
                             cerr << "Process ID: " << pid << " exited with error status: " << exitStatus << endl;

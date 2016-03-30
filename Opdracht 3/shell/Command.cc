@@ -6,9 +6,13 @@
 #include <unistd.h>		// for: getcwd(), close(), execv(), access()
 #include <limits.h>		// for: PATH_MAX
 #include <fcntl.h>		// for: O_RDONLY, O_CREAT, O_WRONLY, O_APPEND
+#include <sys/types.h>  // for: umask
+#include <sys/stat.h>   // for: umask
+#include <algorithm>    // for: count
 #include "asserts.h"
 #include "unix_error.h"
 #include "Command.h"
+#include "string.h"
 using namespace std;
 
 
@@ -99,9 +103,11 @@ void	Command::execute()
 	// Also see: close(2), open(2), getcwd(3), getenv(3), access(2), execv(2), exit(2)
 
 	// TODO: replace the code below with something that really works
-
+    /// Others have nothing to do with our files.
 	umask(S_IWOTH);
+
 	if (hasInput()){
+        /// file openen, redirecten en file weer sluiten.
         int inputf = open(input.c_str(), O_RDONLY);
         dup2(inputf, STDIN_FILENO);
         close(inputf);
@@ -121,22 +127,26 @@ void	Command::execute()
             cerr << "Kon bestand niet openen" << endl;
             exit(EXIT_FAILURE);
         }
-
+        /// redirect output.
         dup2(outputf, STDOUT_FILENO);
         close(outputf);
 	}
 
+    /// commandos omzetten naar argumenten voor het uitvoeren in execv
 	std::vector<char*> commandAttributes(words.size() + 1);
 	for (size_t i = 0; i != words.size(); ++i){
         commandAttributes[i] = &words[i][0];
 	}
 
+    /// Er mag geen legen invoer zijn!
 	if (commandAttributes[0] === '\0'){
         cerr << "\0 is not a valid filename!" << endl;
         exit(EXIT_FAILURE);
 	}
 
+    /// controleren op builtins, cd, exit of logout.
 	if (isBuiltin()) {
+        /// er moet een system call gedaan worden omdat een builtin type is gevonden.
         if (words[0].find("cd") != string:npos){
             if (1 < words.size()) {
                 cout << "Changing working directory to: " << words[1] << endl;
@@ -147,6 +157,7 @@ void	Command::execute()
             exit(EXIT_FAILURE);
         }
 	} else {
+	    /// plaats naar bestand
         if (strstr(commandAttributes[0], "/") != 0) {
             if (commandAttributes[0][0] != '/'){
                 char* cwd = get_current_dir_name();
@@ -162,7 +173,47 @@ void	Command::execute()
                     pathSize++;
                 }
             }
+
+            /// Split path
+            string pathArray[pathSize];
+            int arrayIndex = 0;
+            int lastDelimiterIndex = 0;
+            for (int i = 0; i < path.size(); i++) {
+                if (path[i] == ':') {
+                    pathArray[arrayIndex] = path.substr(lastDelimiterIndex, i - lastDelimiterIndex);
+                    lastDelimiterIndex = i + 1;
+                    arrayIndex++;
+                }
+            }
+
+            /// Search for binary
+            string binaryPath = "";
+            for (int i = 0; i < pathSize; i++) {
+                binaryPath = pathArray[i] + '/' + commandAttributes[0];
+                if (access(binaryPath.c_str(), X_OK) == 0) {
+                    /// Binary is found, do not look further.
+                    break;
+                }
+
+                /// reset binary path.
+                binaryPath = "";
+            }
+
+            if (binaryPath.empty()) {
+                cerr << "command not found: " << commandAttributes[0] << endl;
+                exit(EXIT_FAILURE);
+            }
+
+            commandAttributes[0] = (char*) binaryPath.c_str();
         }
+
+        /// execv system call replaces the current process image with a new process images
+        /// Now execute the PATH passing the arguments array.
+        execv(commandAttributes[0], commandAttributes.data());
+
+        /* NOTREACHED */
+        perror(commandAttributes[0]);
+        exit(EXIT_FAILURE);
 	}
 
 #if 1	/* DEBUG code: Set to 0 to turn off the next block of code */

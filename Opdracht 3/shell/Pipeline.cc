@@ -6,6 +6,7 @@
 #include "asserts.h"
 #include "unix_error.h"
 #include "Pipeline.h"
+#include <sys/wait.h>
 using namespace std;
 
 
