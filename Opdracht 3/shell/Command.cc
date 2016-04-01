@@ -139,7 +139,7 @@ void	Command::execute()
 	}
 
     /// Er mag geen legen invoer zijn!
-	if (commandAttributes[0] === '\0'){
+	if (commandAttributes[0] == '\0'){
         cerr << "\0 is not a valid filename!" << endl;
         exit(EXIT_FAILURE);
 	}
@@ -147,7 +147,7 @@ void	Command::execute()
     /// controleren op builtins, cd, exit of logout.
 	if (isBuiltin()) {
         /// er moet een system call gedaan worden omdat een builtin type is gevonden.
-        if (words[0].find("cd") != string:npos){
+        if (words[0].find("cd") != string::npos){
             if (1 < words.size()) {
                 cout << "Changing working directory to: " << words[1] << endl;
                 chdir(words[1].c_str());

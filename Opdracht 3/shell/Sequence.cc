@@ -66,7 +66,7 @@ void	Sequence::execute()
                     pp->execute();
                 } else if (cpid > 0) {
                     /// don't wait for background processes.
-                    if (!pp->background()) {
+                    if (!pp->isBackground()) {
                         int status;
                         pid_t pid = wait(&status);
 
