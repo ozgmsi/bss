@@ -143,3 +143,147 @@
 	"BestFit.h"
 	"ansi.h"
 
+1456255141 source:e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\allocator.cc
+	"main.h"
+	"Allocator.h"
+
+1456255143 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\main.h
+	<iostream>
+	"common.h"
+	"ansi.h"
+	"asserts.h"
+	"Area.h"
+	"Allocator.h"
+
+1456255141 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\common.h
+
+1456255141 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\ansi.h
+	"common.h"
+
+1456255141 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\asserts.h
+	"where.h"
+	"assert_error.h"
+
+1456255143 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\where.h
+
+1456255141 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\assert_error.h
+	<stdexcept>
+
+1456255141 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\area.h
+	<iostream>
+	"asserts.h"
+
+1456255141 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\allocator.h
+	"Area.h"
+
+1458317208 source:e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\application.cc
+	<cstdlib>
+	"main.h"
+	"Stopwatch.h"
+	"Application.h"
+
+1456255141 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\stopwatch.h
+	<sys/resource.h>
+	<sys/times.h>
+	<times.h>
+	<time.h>
+	<sys/time.h>
+	<windows.h>
+
+1457463628 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\application.h
+	<list>
+	"Allocator.h"
+	"Area.h"
+
+1456255141 source:e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\area.cc
+	"asserts.h"
+	"Area.h"
+
+1456255141 source:e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\assert_error.cc
+	<string>
+	<sstream>
+	"assert_error.h"
+
+1458317208 source:e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\bestfit.cpp
+	"BestFit.h"
+	"ansi.h"
+
+1456604143 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\bestfit.h
+	"Fitter.h"
+
+1456255141 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\fitter.h
+	<list>
+	"Allocator.h"
+
+1456255141 source:e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\firstfit.cc
+	"FirstFit.h"
+	"ansi.h"
+
+1456255141 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\firstfit.h
+	"Fitter.h"
+
+1456255141 source:e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\firstfit2.cc
+	"FirstFit2.h"
+
+1456255141 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\firstfit2.h
+	"FirstFit.h"
+
+1456255141 source:e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\fitter.cc
+	<cmath>
+	"ansi.h"
+	"Fitter.h"
+
+1458317208 source:e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\main.cc
+	<vector>
+	<cstdlib>
+	<getopt.h>
+	"main.h"
+	"RandomFit.h"
+	"FirstFit.h"
+	"FirstFit2.h"
+	"NextFit.h"
+	"NextFit2.h"
+	"BestFit.h"
+	"Application.h"
+
+1456255141 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\randomfit.h
+	"Allocator.h"
+
+1456255141 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\nextfit.h
+	"Fitter.h"
+
+1456255141 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\nextfit2.h
+	"NextFit.h"
+
+1456255141 source:e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\nextfit.cc
+	"main.h"
+	"NextFit.h"
+	"ansi.h"
+
+1456255141 source:e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\nextfit2.cc
+	"NextFit2.h"
+
+1456255141 source:e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\randomfit.cc
+	"main.h"
+	"RandomFit.h"
+	<cstdlib>
+
+1456255141 source:e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\stopwatch.cc
+	<iostream>
+	<cstdio>
+	"asserts.h"
+	"Stopwatch.h"
+	<unistd.h>
+	<time.h>
+
+1456255143 source:e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\unix_error.cc
+	<cstring>
+	<cerrno>
+	<sstream>
+	"unix_error.h"
+
+1456255143 e:\repositories\besturingssystemen\opdracht 1\memadmin_opdracht\unix_error.h
+	<stdexcept>
+	<string>
+	"where.h"
+

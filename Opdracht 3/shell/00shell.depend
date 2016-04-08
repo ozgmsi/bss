@@ -1,0 +1,51 @@
+# depslib dependency file v1.0
+1459342857 source:e:\repositories\besturingssystemen\opdracht 3\shell\assert_error.cc
+	<string>
+	<sstream>
+	"assert_error.h"
+
+1459342857 e:\repositories\besturingssystemen\opdracht 3\shell\assert_error.h
+	<stdexcept>
+
+1459342859 source:e:\repositories\besturingssystemen\opdracht 3\shell\main.cc
+	<stdexcept>
+	<iostream>
+	<cstdlib>
+	"ansi.h"
+	"assert_error.h"
+	"unix_error.h"
+	"Shell.h"
+
+1459342857 e:\repositories\besturingssystemen\opdracht 3\shell\ansi.h
+	"common.h"
+
+1459342857 e:\repositories\besturingssystemen\opdracht 3\shell\common.h
+
+1459342859 e:\repositories\besturingssystemen\opdracht 3\shell\unix_error.h
+	<stdexcept>
+	<string>
+	"where.h"
+
+1459342859 e:\repositories\besturingssystemen\opdracht 3\shell\where.h
+
+1459342857 e:\repositories\besturingssystemen\opdracht 3\shell\shell.h
+	<iostream>
+	"Sequence.h"
+	"Token.h"
+
+1459342857 e:\repositories\besturingssystemen\opdracht 3\shell\sequence.h
+	<vector>
+	"Pipeline.h"
+
+1459345562 e:\repositories\besturingssystemen\opdracht 3\shell\pipeline.h
+	<vector>
+	"Command.h"
+
+1459345562 e:\repositories\besturingssystemen\opdracht 3\shell\command.h
+	<string>
+	<vector>
+
+1459342857 e:\repositories\besturingssystemen\opdracht 3\shell\token.h
+	<string>
+	<istream>
+
